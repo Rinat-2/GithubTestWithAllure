@@ -44,5 +44,4 @@ public class BasicSteps {
         $("body").shouldHave(text(s));
     }
 
-
 }
