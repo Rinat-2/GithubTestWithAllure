@@ -12,14 +12,14 @@ import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.closeWebDriver;
+import static github.IssueTests.issue_name;
+
 
 @Owner("Rinat")
 @Feature("Создание Issue with Steps")
-
-
 public class IssueTestWithSteps {
 
-    static String issue_name = RandomStringUtils.randomAlphabetic(8);
     private static final String BASE_URL = "https://github.com";
 
     private final BasicSteps steps = new BasicSteps();
@@ -32,18 +32,16 @@ public class IssueTestWithSteps {
     }
 
     @AfterEach
-    public void SignOut() {
-        $$(".avatar-user").find(visible).click();
-        $$(".dropdown-signout").find(visible).click();
+    public void signOut() {
+        closeWebDriver();
     }
 
     @Test
     @DisplayName("Создание Issue и его проверка через Steps")
-    public void CreateIssueWithSteps (){
+    public void createIssueWithSteps (){
         steps.openMainPage();
-        steps.SignInGithub();
-        steps.CreateIssue();
-        steps.CheckIssueByName();
+        steps.signInGithub();
+        steps.createIssue(issue_name);
+        steps.checkIssueByName(issue_name);
     }
-
 }

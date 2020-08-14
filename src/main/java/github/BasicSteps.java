@@ -12,7 +12,6 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class BasicSteps {
 
-    static String s = RandomStringUtils.randomAlphabetic(8);
     private static final String BASE_URL = "https://github.com";
 
     @Step("Открываем сайт Github")
@@ -21,7 +20,7 @@ public class BasicSteps {
     }
 
     @Step("Заходим в учетную запись Github")
-    public void SignInGithub() {
+    public void signInGithub() {
         $(byText("Sign in")).click();
         $("#login_field").setValue("Tester-al");
         $("#password").setValue("sdpchound322");
@@ -29,19 +28,19 @@ public class BasicSteps {
     }
 
     @Step("Создаем новое Issue")
-    public void CreateIssue() {
+    public void createIssue(String issue_name) {
         $(".d-inline-flex").click();
         $("a[href='/Tester-al/asdqweqe/issues']").click();
         $(".ml-3").click();
         $("#issue_title").click();
-        $("#issue_title").setValue(s);
+        $("#issue_title").setValue(issue_name);
         $(byText("Submit new issue")).click();
     }
 
     @Step("Проверяем Issue по его названию, которое генерируется автоматически")
-    public void CheckIssueByName() {
+    public void checkIssueByName(String issue_name) {
         $("a[href='/Tester-al/asdqweqe/issues']").click();
-        $("body").shouldHave(text(s));
+        $("body").shouldHave(text(issue_name));
     }
 
 }
