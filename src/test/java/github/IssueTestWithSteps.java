@@ -10,16 +10,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$$;
+
 import static com.codeborne.selenide.Selenide.closeWebDriver;
-import static github.IssueTests.issue_name;
 
 
 @Owner("Rinat")
 @Feature("Создание Issue with Steps")
 public class IssueTestWithSteps {
 
+    static String issueName = RandomStringUtils.randomAlphabetic(8);
     private static final String BASE_URL = "https://github.com";
 
     private final BasicSteps steps = new BasicSteps();
@@ -41,7 +40,7 @@ public class IssueTestWithSteps {
     public void createIssueWithSteps (){
         steps.openMainPage();
         steps.signInGithub();
-        steps.createIssue(issue_name);
-        steps.checkIssueByName(issue_name);
+        steps.createIssue(issueName);
+        steps.checkIssueByName(issueName);
     }
 }

@@ -22,7 +22,7 @@ import static com.codeborne.selenide.Selenide.*;
 @Feature("Создание Issue")
 public class IssueTests {
 
-    static String issue_name = RandomStringUtils.randomAlphabetic(8);
+    static String issueName = RandomStringUtils.randomAlphabetic(8);
     private static final String BASE_URL = "https://github.com";
 
     private final BasicSteps steps = new BasicSteps();
@@ -56,12 +56,12 @@ public class IssueTests {
             $("a[href='/Tester-al/asdqweqe/issues']").click();
             $(".ml-3").click(); //Кликаем на New issue
             $("#issue_title").click();
-            $("#issue_title").setValue(issue_name);
+            $("#issue_title").setValue(issueName);
             $(byText("Submit new issue")).click();
         });
         step("Проверяем Issue по его названию, которое генерируется автоматически", () -> {
             $("a[href='/Tester-al/asdqweqe/issues']").click();
-            $("body").shouldHave(text(issue_name));
+            $("body").shouldHave(text(issueName));
         });
     }
 }
