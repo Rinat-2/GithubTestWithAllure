@@ -17,53 +17,51 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 
+
 @Owner("Rinat")
 @Feature("Создание Issue")
+public class IssueTests {
 
-
-public class IssueTest {
-
-    static String issue_name = RandomStringUtils.randomAlphabetic(8);
+    static String issueName = RandomStringUtils.randomAlphabetic(8);
     private static final String BASE_URL = "https://github.com";
 
     private final BasicSteps steps = new BasicSteps();
 
-    @BeforeEach
-    public void initLogger() {
+    @BeforeAll
+    static void initLogger() {
         SelenideLogger.addListener("allure", new AllureSelenide()
                 .savePageSource(true)
                 .screenshots(true));
     }
 
     @AfterEach
-    public void SignOut() {
-        $$(".avatar-user").find(visible).click();
-        $$(".dropdown-signout").find(visible).click();
+    public void closeDriver() {
+        closeWebDriver();
     }
 
     @Test
-    @DisplayName("Создание Issue и его проверка")
-    public void CreateIssue (){
+    @DisplayName("Проверка создания issue")
+    public void createIssueTest (){
         step("Открываем сайт Github", () -> {
-                    open(BASE_URL);
-                });
+            open(BASE_URL);
+        });
         step("Заходим в учетную запись Github", () -> {
-                    $(byText("Sign in")).click();
-                    $("#login_field").setValue("Tester-al");
-                    $("#password").setValue("sdpchound322");
-                    $(byName("commit")).click();
-                });
+            $(byText("Sign in")).click();
+            $("#login_field").setValue("Tester-al");
+            $("#password").setValue("sdpchound322");
+            $(byName("commit")).click();
+        });
         step("Создаем новое Issue", () -> {
-                    $(".d-inline-flex").click();
-                    $("a[href='/Tester-al/asdqweqe/issues']").click();
-                    $(".ml-3").click();
-                    $("#issue_title").click();
-                    $("#issue_title").setValue(issue_name);
-                    $(byText("Submit new issue")).click();
-                });
+            $(".d-inline-flex").click();
+            $("a[href='/Tester-al/asdqweqe/issues']").click();
+            $(".ml-3").click(); // todo добавить комментарий
+            $("#issue_title").click();
+            $("#issue_title").setValue(issue_name);
+            $(byText("Submit new issue")).click();
+        });
         step("Проверяем Issue по его названию, которое генерируется автоматически", () -> {
             $("a[href='/Tester-al/asdqweqe/issues']").click();
-            $("body").shouldHave(text(issue_name));
-                });
+            $("body").shouldHave(text(issueName));
+        });
     }
 }
